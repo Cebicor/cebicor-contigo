@@ -67,6 +67,30 @@ a{text-decoration:none;color:inherit}
 .footer{margin-top:44px;padding:22px 0;color:var(--muted);font-size:11px;text-align:center}
 @media(max-width:950px){.grid4{grid-template-columns:repeat(2,1fr)}.grid3,.grid2,.split,.helpgrid{grid-template-columns:1fr}.opts{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:650px){.nav{display:none}.mobileHelp{display:block}.main{padding:18px 14px 60px}.hero{padding:27px}.hero h1{font-size:34px}.grid4,.grid3,.servicebar{grid-template-columns:1fr}.opts{grid-template-columns:1fr}.workspace-head{align-items:flex-start}.helpgrid{grid-template-columns:1fr}.qr{max-width:280px;margin:auto}}
+
+/* CEBICOR Contigo v2: navegación por bloques */
+body.app-v2{overflow-x:hidden}
+body.app-v2 .main{max-width:980px}
+body.app-v2 .nav{display:none}
+body.app-v2 .servicebar,body.app-v2 .crisis{display:none}
+body.app-v2 .section,body.app-v2 #workspace{display:none}
+body.app-v2 .section.active-screen,body.app-v2 #workspace.active-screen{display:block;animation:screenIn .28s ease}
+body.app-v2 .hero{min-height:calc(100vh - 150px);display:grid;align-content:center}
+body.app-v2 .hero:not(.active-screen){display:none}
+body.app-v2 .hero-actions{display:grid;grid-template-columns:1.2fr 1fr 1fr}
+body.app-v2 .home-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
+body.app-v2 .home-tile{background:rgba(255,255,255,.96);color:var(--ink);padding:15px;border-radius:17px;cursor:pointer;box-shadow:var(--shadow)}
+body.app-v2 .home-tile b{display:block;font-size:13px}.home-tile span{font-size:11px;color:var(--muted)}
+body.app-v2 .screen-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:16px}
+body.app-v2 .screen-head h2{margin:0}.screen-back{border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 11px;font-weight:800;cursor:pointer}
+body.app-v2 .help-float{position:fixed;right:18px;bottom:18px;z-index:90;background:var(--red);color:#fff;border:0;border-radius:999px;padding:12px 15px;font-weight:800;box-shadow:0 14px 30px rgba(163,75,64,.28);cursor:pointer}
+body.app-v2 .intensity-box{background:#fff;border:1px solid var(--line);border-radius:22px;padding:21px;box-shadow:var(--shadow);margin-top:18px}
+body.app-v2 .intensity-row{display:grid;grid-template-columns:1fr 58px;gap:14px;align-items:center;background:var(--soft);padding:16px;border-radius:16px}.intensity-row input{width:100%;accent-color:var(--green)}
+body.app-v2 .intensity-number{width:58px;height:58px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-size:21px;font-weight:800}
+body.app-v2 .impact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}.impact-grid button{border:1px solid var(--line);background:#fff;padding:10px;border-radius:11px;cursor:pointer}.impact-grid button.active{background:var(--green);color:#fff}
+@keyframes screenIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(max-width:750px){body.app-v2 .hero-actions,body.app-v2 .home-grid{grid-template-columns:1fr}body.app-v2 .impact-grid{grid-template-columns:repeat(2,1fr)}body.app-v2 .hero{min-height:auto}}
+
 </style>
 </head>
 <body>
@@ -92,9 +116,15 @@ a{text-decoration:none;color:inherit}
  <h1>Este es tu espacio para hacer una pausa, entenderte y pedir apoyo</h1>
  <p>Puedes utilizar una herramienta breve, realizar una autoevaluación orientativa, leer sobre lo que estás viviendo o solicitar una consulta confidencial.</p>
  <div class="hero-actions">
-  <button class="btn primary" onclick="go('feelings')">🌿 ¿Cómo me siento hoy?</button>
-  <button class="btn secondary" onclick="go('tests')">Realizar evaluación</button>
-  <button class="btn secondary" onclick="book()">Solicitar consulta</button>
+  <button class="btn primary" onclick="showScreen('feelings')">🌿 ¿Cómo me siento hoy?</button>
+  <button class="btn secondary" onclick="showScreen('consultation')">📅 Solicitar consulta</button>
+  <button class="btn secondary" onclick="showScreen('help')">🆘 Necesito ayuda ahora</button>
+ </div>
+ <div class="home-grid">
+  <div class="home-tile" onclick="showScreen('tests')"><b>🧠 Evaluaciones</b><span>Chequeos orientativos breves</span></div>
+  <div class="home-tile" onclick="showScreen('tools')"><b>⏱️ Herramientas de 5 minutos</b><span>Recursos para regularte</span></div>
+  <div class="home-tile" onclick="showScreen('library')"><b>📚 Biblioteca rápida</b><span>Lecturas de 1 a 3 minutos</span></div>
+  <div class="home-tile" onclick="showScreen('plan')"><b>📝 Mi plan personal</b><span>Organiza tu siguiente paso</span></div>
  </div>
 </section>
 
@@ -151,6 +181,15 @@ a{text-decoration:none;color:inherit}
 </div>
 <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:14px"><button class="btn green" onclick="generatePlan()">Generar mi tarjeta</button><button class="btn soft" onclick="clearPlan()">Limpiar</button></div>
 <div id="planCard" class="plan-card hidden"></div></div></section>
+
+
+<section class="section" id="consultation"><h2>Consulta psicológica confidencial</h2><p>Todo lo relacionado con el servicio está organizado en un solo bloque.</p>
+<div class="grid2">
+ <div class="card"><div class="icon">🗓️</div><h3>Disponibilidad</h3><p><b>Todos los jueves</b><br>8:00 a. m. – 1:00 p. m.<br>Mediante cita previa.</p><div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:14px"><button class="btn green" onclick="book()">Reservar consulta</button><button class="btn soft" onclick="openWhatsApp()">Escribir por WhatsApp</button></div></div>
+ <div class="card"><div class="icon">🔒</div><h3>¿Qué ocurre en la primera consulta?</h3><p>La psicóloga escuchará lo que estás viviendo, explorará tus necesidades y acordará contigo objetivos de acompañamiento. Es un espacio profesional, respetuoso y confidencial.</p></div>
+</div>
+<div class="card" style="margin-top:16px"><h3>¿Qué puedo trabajar con la psicóloga?</h3><details><summary>Ansiedad, estrés y estado de ánimo</summary><p>Preocupación constante, crisis de ansiedad, tristeza, irritabilidad, desmotivación o agotamiento emocional.</p></details><details><summary>Relaciones, familia y límites</summary><p>Conflictos, comunicación, rupturas, crianza, vínculos y dificultad para decir no.</p></details><details><summary>Situaciones laborales</summary><p>Estrés laboral, presión, adaptación, conflictos, liderazgo, cambios o dificultades con el equipo.</p></details><details><summary>Sueño, duelo y proyecto de vida</summary><p>Dificultad para dormir, procesos de pérdida, toma de decisiones, propósito y sensación de estancamiento.</p></details></div>
+</section>
 
 <section class="section" id="help"><h2>Necesito ayuda ahora</h2><p>Puedes reservar una consulta, escribir por WhatsApp o solicitar que te contacten.</p>
 <div class="helpbox"><div class="helpgrid">
@@ -256,10 +295,42 @@ function sendContact(){
  contactResult.innerHTML='<div class="result"><h4>Solicitud preparada</h4><p>Se abrirá tu aplicación de correo para que confirmes el envío.</p></div>'
 }
 </script>
+
+<script>
+// Navegación por bloques: solo una pantalla visible a la vez.
+document.body.classList.add('app-v2');
+const homeHero=document.querySelector('.hero');
+homeHero.classList.add('active-screen');
+function showScreen(id){
+  document.querySelectorAll('.section,#workspace,.hero').forEach(x=>x.classList.remove('active-screen'));
+  if(id==='home'){homeHero.classList.add('active-screen');window.scrollTo({top:0,behavior:'smooth'});return;}
+  const target=document.getElementById(id);if(!target)return;
+  target.classList.add('active-screen');
+  if(!target.querySelector('.screen-head')){
+    const h2=target.querySelector('h2');
+    if(h2){const wrap=document.createElement('div');wrap.className='screen-head';h2.parentNode.insertBefore(wrap,h2);wrap.appendChild(h2);const b=document.createElement('button');b.className='screen-back';b.textContent='← Inicio';b.onclick=()=>showScreen('home');wrap.appendChild(b);}
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function go(id){showScreen(id)}
+const floating=document.createElement('button');floating.className='help-float';floating.textContent='🆘 Necesito ayuda';floating.onclick=()=>showScreen('help');document.body.appendChild(floating);
+
+// Primer paso guiado: emoción → intensidad → kit.
+let pendingEmotion=null,pendingImpact=null,pendingIntensity=5;
+const originalOpenTool=openTool;
+openTool=function(i){
+ pendingEmotion=i;pendingImpact=null;pendingIntensity=5;
+ const f=feelings[i];wsTitle.textContent='Antes de continuar';wsSub.textContent=f[1];
+ wsBody.innerHTML=`<div class="intensity-box"><h3>¿Qué tan intenso se siente?</h3><div class="intensity-row"><input id="intensityRange" type="range" min="1" max="10" value="5" oninput="pendingIntensity=this.value;intensityNumber.textContent=this.value"><div class="intensity-number" id="intensityNumber">5</div></div><h3 style="margin-top:18px">¿Cuánto está afectando tu trabajo, descanso, relaciones o funcionamiento diario?</h3><div class="impact-grid">${['No','Un poco','Bastante','Mucho'].map(x=>`<button onclick="pendingImpact='${x}';document.querySelectorAll('.impact-grid button').forEach(b=>b.classList.remove('active'));this.classList.add('active')">${x}</button>`).join('')}</div><div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:16px"><button class="btn green" onclick="continueEmotion()">Continuar</button><button class="btn soft" onclick="showScreen('consultation')">Solicitar consulta</button></div></div>`;
+ workspace.classList.remove('hidden');workspace.classList.add('active-screen');document.querySelectorAll('.section,.hero').forEach(x=>x.classList.remove('active-screen'));window.scrollTo({top:0,behavior:'smooth'});
+}
+function continueEmotion(){if(!pendingImpact){alert('Selecciona cuánto está afectando tu día.');return}workspace.classList.remove('active-screen');originalOpenTool(pendingEmotion);workspace.classList.add('active-screen');}
+</script>
+
 <script>
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+    navigator.serviceWorker.register("./service-worker.js?v=2").catch(() => {});
   });
 }
 </script>
