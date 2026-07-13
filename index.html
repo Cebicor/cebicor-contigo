@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#173a28">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Espacio de Calma">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>Mi Espacio de Calma · CEBICOR Contigo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+:root{
+ --bg:#f7f6f1;--surface:#fff;--soft:#eef5ef;--ink:#183226;--muted:#68746d;
+ --line:#dce6dc;--green:#2f6f4a;--green2:#5f9d74;--deep:#173a28;
+ --amber:#a97518;--amberbg:#fff5df;--red:#a34b40;--redbg:#faece9;
+ --shadow:0 16px 42px rgba(25,57,38,.10);--radius:22px
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;line-height:1.55}
+button,input,textarea,select{font:inherit}
+a{text-decoration:none;color:inherit}
+.top{position:sticky;top:0;z-index:60;background:rgba(23,58,40,.96);backdrop-filter:blur(14px);color:#fff}
+.topin{max-width:1180px;margin:auto;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:11px}
+.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(145deg,#7cbd8f,#2f6f4a);display:grid;place-items:center;font:700 20px 'Playfair Display';box-shadow:0 10px 24px rgba(0,0,0,.2)}
+.brand b{font-family:'Playfair Display';font-size:18px}.brand small{display:block;color:#b7c9bb;font-size:11px}
+.nav{display:flex;gap:7px;flex-wrap:wrap}.nav button{border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:#fff;padding:8px 10px;border-radius:11px;cursor:pointer}
+.mobileHelp{display:none;border:0;background:#fff;color:var(--green);padding:9px 12px;border-radius:11px;font-weight:800}
+.main{max-width:1180px;margin:auto;padding:28px 18px 80px}
+.hero{background:linear-gradient(135deg,#153825,#2f6f4a 62%,#6aa77d);color:#fff;border-radius:30px;padding:38px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:360px;height:360px;border-radius:50%;background:rgba(255,255,255,.08);right:-130px;top:-180px}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:1.6px;font-weight:800;color:#c6e8ce}
+.hero h1{font:700 43px/1.05 'Playfair Display';margin:8px 0 12px;max-width:800px}.hero p{max-width:780px;color:#e4f0e6;font-size:16px}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.btn{border:0;padding:11px 15px;border-radius:13px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn.primary{background:#fff;color:var(--green)}.btn.secondary{background:rgba(255,255,255,.10);color:#fff;border:1px solid rgba(255,255,255,.16)}.btn.green{background:var(--green);color:#fff}.btn.soft{background:var(--soft);color:var(--green);border:1px solid var(--line)}.btn.red{background:var(--red);color:#fff}
+.servicebar{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:18px;border-radius:18px;overflow:hidden}
+.serviceitem{background:#fff;padding:16px}.serviceitem b{display:block;font-size:13px}.serviceitem span{font-size:12px;color:var(--muted)}
+.crisis{margin-top:18px;background:var(--redbg);border:1px solid #e5b8b1;border-radius:16px;padding:15px 17px;color:#6d3028}.crisis strong{color:var(--red)}
+.section{margin-top:36px}.section h2{font:700 30px 'Playfair Display';margin:0 0 7px}.section>p{color:var(--muted);max-width:860px;margin:0 0 20px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:19px;box-shadow:var(--shadow)}
+.click{cursor:pointer;transition:.2s}.click:hover{transform:translateY(-3px);border-color:#b7d3bf}
+.icon{font-size:29px}.card h3{font-size:17px;margin:10px 0 6px}.card p{font-size:13px;color:var(--muted);margin:0}.tag{display:inline-block;margin-top:10px;background:var(--soft);color:var(--green);padding:5px 8px;border-radius:999px;font-size:10px;font-weight:800}
+.workspace{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);overflow:hidden}
+.hidden{display:none!important}
+.workspace-head{padding:21px 23px;background:var(--soft);display:flex;justify-content:space-between;align-items:center;gap:14px}.workspace-head h2{font:700 24px 'Playfair Display';margin:0}.workspace-head p{margin:3px 0 0;color:var(--muted);font-size:13px}.close{border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 9px;cursor:pointer}
+.workspace-body{padding:23px}.split{display:grid;grid-template-columns:1.1fr 1fr;gap:18px}.panel{border:1px solid var(--line);border-radius:17px;padding:18px}.panel h3{font:700 18px 'Playfair Display';margin:0 0 7px}
+.reading{background:var(--soft);border-left:4px solid var(--green);padding:15px;border-radius:0 13px 13px 0;font-size:13px}
+.checklist{display:grid;gap:9px;margin-top:12px}.check{display:flex;gap:9px;align-items:flex-start;background:var(--soft);padding:10px;border-radius:11px;font-size:13px}
+.orbwrap{height:235px;display:grid;place-items:center}.orb{width:115px;height:115px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#8bc59c,#2f6f4a);display:grid;place-items:center;color:#fff;transition:all 4s ease-in-out;box-shadow:0 20px 45px rgba(47,111,74,.28)}.orb.expand{width:205px;height:205px}
+.assessment{background:#fff;border:1px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:var(--shadow)}.assess-head{padding:22px 24px;background:var(--soft);border-bottom:1px solid var(--line)}.assess-head h3{font:700 22px 'Playfair Display';margin:0}.assess-head p{margin:4px 0 0;color:var(--muted);font-size:13px}.assess-body{padding:23px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}.tab{border:1px solid var(--line);background:#fff;padding:9px 12px;border-radius:12px;cursor:pointer;font-weight:700;color:var(--muted)}.tab.active{background:var(--green);color:#fff;border-color:var(--green)}
+.q{border-top:1px solid var(--line);padding:16px 0}.q:first-child{border-top:0}.q b{display:block;margin-bottom:8px}.opts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.opts label{border:1px solid var(--line);padding:9px;border-radius:11px;font-size:12px;cursor:pointer}
+.result{margin-top:17px;border-left:4px solid var(--green);background:var(--soft);padding:17px;border-radius:0 14px 14px 0}.result.warn{border-left-color:var(--amber);background:var(--amberbg)}.result.danger{border-left-color:var(--red);background:var(--redbg)}.result h4{margin:0 0 6px}.result p{margin:0;color:var(--muted);font-size:13px}
+.library-item{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px}.library-item h3{font-size:16px;margin:7px 0 6px}.library-item p{font-size:13px;color:var(--muted)}.library-item details{margin-top:10px}.library-item summary{cursor:pointer;font-weight:800;color:var(--green)}
+.plan{background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:var(--shadow)}.field{display:grid;gap:7px}.field label{font-size:12px;font-weight:800;color:var(--green)}.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);padding:11px 12px;border-radius:12px;background:#fff}.field textarea{min-height:95px;resize:vertical}
+.plan-card{margin-top:18px;background:linear-gradient(135deg,#173a28,#2f6f4a);color:#fff;border-radius:20px;padding:21px}.plan-card h3{font:700 22px 'Playfair Display';margin:0 0 8px}.plan-card p{color:#e2efe4}
+.helpbox{background:#fff;border:1px solid var(--line);border-radius:24px;padding:23px;box-shadow:var(--shadow)}.helpgrid{display:grid;grid-template-columns:1fr 260px;gap:20px;align-items:center}.qr{background:#fff;border:1px solid var(--line);padding:14px;border-radius:18px;display:grid;place-items:center}.consent{background:var(--soft);padding:14px;border-radius:14px;font-size:12px;color:var(--muted)}
+.alert-config{background:var(--amberbg);border:1px solid #e7ca8e;padding:16px;border-radius:14px;color:#76541d;font-size:13px;margin-top:15px}
+.footer{margin-top:44px;padding:22px 0;color:var(--muted);font-size:11px;text-align:center}
+@media(max-width:950px){.grid4{grid-template-columns:repeat(2,1fr)}.grid3,.grid2,.split,.helpgrid{grid-template-columns:1fr}.opts{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.nav{display:none}.mobileHelp{display:block}.main{padding:18px 14px 60px}.hero{padding:27px}.hero h1{font-size:34px}.grid4,.grid3,.servicebar{grid-template-columns:1fr}.opts{grid-template-columns:1fr}.workspace-head{align-items:flex-start}.helpgrid{grid-template-columns:1fr}.qr{max-width:280px;margin:auto}}
+</style>
+</head>
+<body>
+<header class="top">
+<div class="topin">
+ <div class="brand"><div class="logo">C</div><div><b>Mi Espacio de Calma</b><small>CEBICOR Contigo · NEWLINK</small></div></div>
+ <div class="nav">
+  <button onclick="go('feelings')">Cómo me siento</button>
+  <button onclick="go('needs')">Qué necesito</button>
+  <button onclick="go('tools')">Herramientas</button>
+  <button onclick="go('library')">Lecturas</button>
+  <button onclick="go('tests')">Evaluaciones</button>
+  <button onclick="go('plan')">Mi plan</button>
+  <button onclick="go('help')">Necesito ayuda</button>
+ </div>
+ <button class="mobileHelp" onclick="go('help')">Ayuda</button>
+</div>
+</header>
+
+<main class="main">
+<section class="hero">
+ <div class="eyebrow">Acompañamiento emocional entre sesiones</div>
+ <h1>Este es tu espacio para hacer una pausa, entenderte y pedir apoyo</h1>
+ <p>Puedes utilizar una herramienta breve, realizar una autoevaluación orientativa, leer sobre lo que estás viviendo o solicitar una consulta confidencial.</p>
+ <div class="hero-actions">
+  <button class="btn primary" onclick="go('feelings')">🌿 ¿Cómo me siento hoy?</button>
+  <button class="btn secondary" onclick="go('tests')">Realizar evaluación</button>
+  <button class="btn secondary" onclick="book()">Solicitar consulta</button>
+ </div>
+</section>
+
+<div class="servicebar">
+ <div class="serviceitem"><b>🗓️ Todos los jueves</b><span>Servicio disponible semanalmente</span></div>
+ <div class="serviceitem"><b>🕗 8:00 a. m. – 1:00 p. m.</b><span>Consulta mediante cita previa</span></div>
+ <div class="serviceitem"><b>🔒 Espacio confidencial</b><span>Acompañamiento profesional y respetuoso</span></div>
+</div>
+
+<div class="crisis"><strong>Si no te sientes seguro/a ahora:</strong> no permanezcas solo/a. Busca a una persona de confianza y contacta de inmediato los servicios de emergencia de tu localidad. WhatsApp, Bookings y esta página no sustituyen atención de emergencia.</div>
+
+<section class="section" id="feelings"><h2>¿Cómo te sientes hoy?</h2><p>Cada emoción tiene su propio kit con una herramienta, una lectura breve y una opción para solicitar apoyo.</p><div class="grid4" id="feelCards"></div></section>
+<section id="workspace" class="workspace hidden"><div class="workspace-head"><div><h2 id="wsTitle"></h2><p id="wsSub"></p></div><button class="close" onclick="workspace.classList.add('hidden')">Cerrar</button></div><div class="workspace-body" id="wsBody"></div></section>
+
+<section class="section" id="needs"><h2>Elige lo que necesitas hoy</h2><p>No siempre sabemos ponerle nombre a una emoción. Puedes comenzar por la necesidad que tengas ahora mismo.</p><div class="grid3" id="needsGrid"></div></section>
+
+<section class="section" id="tools"><h2>Herramientas de cinco minutos</h2><p>Recursos sencillos para utilizar durante la jornada o antes de una conversación difícil.</p><div class="grid3">
+ <div class="library-item"><div class="icon">🌬️</div><h3>Respiración 4-4-6</h3><p>Baja la activación física y ayuda a recuperar claridad.</p><details><summary>Ver instrucciones</summary><p>Inhala 4 segundos, sostén 4 y exhala 6. Repite durante 3 a 5 minutos.</p></details></div>
+ <div class="library-item"><div class="icon">🧭</div><h3>Grounding 5-4-3-2-1</h3><p>Ayuda a regresar al presente cuando la mente está acelerada.</p><details><summary>Ver instrucciones</summary><p>Nombra 5 cosas que ves, 4 que tocas, 3 sonidos, 2 olores y 1 sabor o sensación.</p></details></div>
+ <div class="library-item"><div class="icon">🗂️</div><h3>Vaciado mental</h3><p>Saca de tu cabeza pendientes y preocupaciones.</p><details><summary>Ver instrucciones</summary><p>Escribe todo sin ordenar. Después clasifica en: hoy, puede esperar, puedo delegar y no depende de mí.</p></details></div>
+ <div class="library-item"><div class="icon">🛑</div><h3>Técnica STOP</h3><p>Útil cuando estás muy enojado/a o a punto de reaccionar.</p><details><summary>Ver instrucciones</summary><p>Detente, toma distancia, observa lo que sientes y procede cuando la intensidad haya bajado.</p></details></div>
+ <div class="library-item"><div class="icon">🎯</div><h3>Tres prioridades</h3><p>Reduce la sobrecarga eligiendo solo tres focos realistas.</p><details><summary>Ver instrucciones</summary><p>Elige una tarea imprescindible, una importante y una pequeña. Todo lo demás puede esperar.</p></details></div>
+ <div class="library-item"><div class="icon">💛</div><h3>Autocompasión breve</h3><p>Ayuda a disminuir la autocrítica intensa.</p><details><summary>Ver instrucciones</summary><p>Pregúntate: “¿Qué le diría a una persona que quiero si estuviera viviendo esto?”</p></details></div>
+</div></section>
+
+<section class="section" id="library"><h2>Biblioteca rápida</h2><p>Lecturas breves para entender mejor lo que estás viviendo y saber cuándo pedir ayuda.</p><div class="grid3">
+ <div class="library-item"><h3>¿Cómo sé si necesito terapia?</h3><details><summary>Leer</summary><p>Puede ser útil pedir apoyo cuando una dificultad se repite, afecta tu sueño, trabajo o relaciones, o sientes que ya no quieres manejarla solo/a.</p></details></div>
+ <div class="library-item"><h3>Pedir ayuda no significa estar en crisis</h3><details><summary>Leer</summary><p>La terapia también sirve para prevenir, conocerte, aprender a poner límites, tomar decisiones y fortalecer recursos emocionales.</p></details></div>
+ <div class="library-item"><h3>Diferencia entre estrés y ansiedad</h3><details><summary>Leer</summary><p>El estrés suele relacionarse con una demanda concreta. La ansiedad puede continuar incluso cuando la situación inmediata ya pasó.</p></details></div>
+ <div class="library-item"><h3>¿Por qué sobrepienso tanto?</h3><details><summary>Leer</summary><p>Sobrepensar suele ser un intento de encontrar certeza o evitar equivocarse. Sin embargo, repetir el pensamiento no siempre produce una solución.</p></details></div>
+ <div class="library-item"><h3>Cómo poner límites sin sentir culpa</h3><details><summary>Leer</summary><p>Un límite no es un castigo. Es una forma de comunicar lo que puedes, necesitas y estás dispuesto/a a aceptar.</p></details></div>
+ <div class="library-item"><h3>Qué ocurre en la primera consulta</h3><details><summary>Leer</summary><p>La psicóloga escuchará lo que estás viviendo, explorará tus necesidades y acordará contigo posibles objetivos de acompañamiento.</p></details></div>
+</div></section>
+
+<section class="section" id="tests"><h2>Evaluaciones orientativas</h2><p>Los resultados no constituyen un diagnóstico. Te ayudan a reconocer si sería conveniente conversar con la psicóloga.</p>
+<div class="assessment"><div class="assess-head"><h3>Chequeo emocional breve</h3><p>Responde pensando en las últimas dos semanas.</p></div><div class="assess-body">
+ <div class="tabs">
+  <button class="tab active" onclick="switchTest('anx',this)">Ansiedad · GAD-2</button>
+  <button class="tab" onclick="switchTest('mood',this)">Estado de ánimo · PHQ-2</button>
+  <button class="tab" onclick="switchTest('stress',this)">Estrés laboral</button>
+  <button class="tab" onclick="switchTest('sleep',this)">Sueño</button>
+ </div>
+ <div id="test-anx" class="testbox"></div><div id="test-mood" class="testbox hidden"></div><div id="test-stress" class="testbox hidden"></div><div id="test-sleep" class="testbox hidden"></div>
+</div></div></section>
+
+<section class="section" id="plan"><h2>Mi plan personal de bienestar</h2><p>Completa esta tarjeta después de utilizar una herramienta. Por defecto, la información se queda únicamente en tu teléfono.</p>
+<div class="plan"><div class="grid2">
+ <div class="field"><label>Hoy me siento</label><input id="pFeel" placeholder="Ej.: ansiosa, cansado, triste..."></div>
+ <div class="field"><label>Mi intensidad emocional es</label><select id="pLevel"><option>1 - Muy baja</option><option>2</option><option>3</option><option>4</option><option>5 - Moderada</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10 - Muy alta</option></select></div>
+ <div class="field"><label>Lo que detonó esto fue</label><textarea id="pTrigger"></textarea></div>
+ <div class="field"><label>La herramienta que utilicé</label><textarea id="pTool"></textarea></div>
+ <div class="field"><label>Después de usarla me siento</label><input id="pAfter"></div>
+ <div class="field"><label>Mi siguiente paso será</label><input id="pNext"></div>
+</div>
+<div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:14px"><button class="btn green" onclick="generatePlan()">Generar mi tarjeta</button><button class="btn soft" onclick="clearPlan()">Limpiar</button></div>
+<div id="planCard" class="plan-card hidden"></div></div></section>
+
+<section class="section" id="help"><h2>Necesito ayuda ahora</h2><p>Puedes reservar una consulta, escribir por WhatsApp o solicitar que te contacten.</p>
+<div class="helpbox"><div class="helpgrid">
+ <div>
+  <h3 style="font:700 23px 'Playfair Display';margin-top:0">Elige la forma de apoyo que prefieras</h3>
+  <div style="display:flex;gap:9px;flex-wrap:wrap;margin:12px 0 18px">
+   <button class="btn green" onclick="book()">📅 Reservar consulta</button>
+   <button class="btn soft" onclick="openWhatsApp()">💬 Abrir WhatsApp</button>
+   <button class="btn soft" onclick="toggleContact()">✉️ Quiero que me contacten</button>
+  </div>
+  <div class="consent">El uso de herramientas y evaluaciones puede ser anónimo. Solo se compartirá información si tú decides solicitar contacto y otorgas consentimiento.</div>
+  <div id="contactForm" class="hidden" style="margin-top:16px">
+    <div class="grid2">
+      <div class="field"><label>Nombre</label><input id="cName" placeholder="Escribe tu nombre"></div>
+      <div class="field"><label>Correo o teléfono</label><input id="cContact" placeholder="Cómo podemos contactarte"></div>
+      <div class="field"><label>Área principal</label><select id="cArea"><option>Ansiedad</option><option>Estado de ánimo</option><option>Estrés laboral</option><option>Sueño</option><option>Relaciones</option><option>Proyecto de vida</option><option>Crisis emocional</option><option>Otro</option></select></div>
+      <div class="field"><label>Medio preferido</label><select id="cMethod"><option>WhatsApp</option><option>Correo</option><option>Llamada</option></select></div>
+    </div>
+    <label class="check" style="margin-top:12px"><input type="checkbox" id="consent"> Acepto compartir estos datos con la psicóloga para recibir contacto.</label>
+    <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:12px"><button class="btn green" onclick="sendContact()">Enviar solicitud</button></div>
+    <div id="contactResult"></div>
+  </div>
+  <div class="alert-config"><b>Sobre las alertas por correo:</b> esta versión puede abrir un correo preparado con la solicitud del colaborador. Para que el mensaje se envíe automáticamente sin abrir la aplicación de correo, el HTML debe publicarse y conectarse a Microsoft Forms/Power Automate o a un formulario seguro.</div>
+ </div>
+ <div><div class="qr" id="qrcode"></div><p style="text-align:center;color:var(--muted);font-size:12px;margin-top:8px">Escanea para escribir por WhatsApp</p></div>
+</div></div></section>
+
+<div class="footer">CEBICOR® · Servicio de Psicología Corporativa para NEWLINK · Herramienta educativa, orientativa y confidencial</div>
+</main>
+
+<script>
+const BOOKING="https://outlook.office.com/book/NewlinkDominicana@cebicor.com/?ismsaljsauthenabled", WHATSAPP="https://wa.me/18293224000?text=Hola%2C%20estoy%20utilizando%20CEBICOR%20Contigo%20y%20me%20gustar%C3%ADa%20recibir%20orientaci%C3%B3n.", EMAIL="info@cebicor.com";
+function go(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
+function book(){window.open(BOOKING,'_blank','noopener')}
+function openWhatsApp(){window.open(WHATSAPP,'_blank','noopener')}
+new QRCode(document.getElementById("qrcode"),{text:WHATSAPP,width:220,height:220,colorDark:"#000000",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.H});
+
+const feelings=[
+['🌿','Estoy muy ansioso/a','Mi cuerpo y mi mente están acelerados.','La ansiedad intenta protegerte. Primero baja la activación física y luego organiza tus pensamientos.','breath'],
+['☁️','Me siento triste','Tengo poca energía o ganas de aislarme.','La tristeza necesita validación, descanso y pequeños movimientos. No tienes que resolverlo todo hoy.','activate'],
+['🧠','Tengo la mente saturada','Siento que tengo demasiadas cosas encima.','Sacar las tareas y preocupaciones de la cabeza ayuda a recuperar claridad.','dump'],
+['🌙','No puedo dormir','Estoy cansado/a, pero mi mente sigue activa.','No intentes obligarte a dormir. Reduce estímulos y ayuda al cuerpo a desacelerar.','sleep'],
+['🔥','Estoy muy enojado/a','Siento tensión o ganas de reaccionar.','El enojo puede señalar una necesidad o un límite vulnerado. Primero regula la intensidad.','stop'],
+['🔄','Estoy sobrepensando','No puedo dejar de darle vueltas a lo mismo.','Diferencia lo que puedes resolver de lo que solo estás intentando controlar mentalmente.','control'],
+['💼','Tuve un día difícil','Estoy agotado/a, frustrado/a o sobrecargado/a.','Un día difícil no define tu capacidad. Necesitas cerrar la jornada de forma consciente.','work'],
+['✨','No tengo motivación','Me cuesta empezar o conectar con lo que hago.','La motivación muchas veces aparece después de comenzar. Prueba una acción mínima.','five']
+];
+feelCards.innerHTML=feelings.map((f,i)=>`<div class="card click" onclick="openTool(${i})"><div class="icon">${f[0]}</div><h3>${f[1]}</h3><p>${f[2]}</p><span class="tag">Abrir mi kit</span></div>`).join('');
+
+const needs=[
+['💧','Necesito calmarme','Herramienta de respiración','0'],['🗂️','Necesito organizar mi mente','Vaciado mental y prioridades','2'],['🌙','Necesito descansar','Rutina breve de sueño','3'],['🛑','Necesito poner un límite','Pausa y comunicación','4'],['🔋','Necesito recuperar energía','Acción mínima','7'],['💬','Necesito hablar con alguien','Reserva o WhatsApp','help']
+];
+needsGrid.innerHTML=needs.map(n=>`<div class="card click" onclick="${n[3]==='help'?"go('help')":`openTool(${n[3]})`}"><div class="icon">${n[0]}</div><h3>${n[1]}</h3><p>${n[2]}</p></div>`).join('');
+
+function openTool(i){
+ const f=feelings[i];wsTitle.textContent=f[1];wsSub.textContent=f[2];
+ wsBody.innerHTML=`<div class="split"><div class="panel"><h3>Primero: baja la intensidad</h3>${exercise(f[4])}</div><div class="panel"><h3>Entiende lo que pasa</h3><div class="reading">${f[3]}</div><h3 style="margin-top:16px">Tu siguiente paso</h3><div class="checklist"><label class="check"><input type="checkbox"> Me siento un poco mejor.</label><label class="check"><input type="checkbox"> Necesito repetir la herramienta.</label><label class="check"><input type="checkbox"> Quiero hablar con alguien de confianza.</label><label class="check"><input type="checkbox"> Quiero solicitar una consulta.</label></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px"><button class="btn green" onclick="book()">Agendar consulta</button><button class="btn soft" onclick="go('help')">Necesito ayuda</button></div></div></div>`;
+ workspace.classList.remove('hidden');workspace.scrollIntoView({behavior:'smooth'})
+}
+function exercise(t){
+ if(t==='breath')return `<div class="orbwrap"><div class="orb" id="orb"><b>Respira</b></div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn green" onclick="startBreath()">Iniciar 4-4-6</button><button class="btn soft" onclick="ground()">5-4-3-2-1</button></div><div id="extra"></div>`;
+ if(t==='activate')return `<div class="checklist"><label class="check"><input type="checkbox"> Tomar agua o comer algo sencillo.</label><label class="check"><input type="checkbox"> Abrir una ventana o caminar cinco minutos.</label><label class="check"><input type="checkbox"> Escribirle a alguien de confianza.</label><label class="check"><input type="checkbox"> Hacer una tarea pequeña.</label></div>`;
+ if(t==='dump')return `<textarea style="width:100%;min-height:130px;border:1px solid var(--line);border-radius:12px;padding:11px" placeholder="Escribe todo lo que tienes en la cabeza..."></textarea><div class="checklist"><label class="check"><input type="checkbox"> Urgente hoy.</label><label class="check"><input type="checkbox"> Puede esperar.</label><label class="check"><input type="checkbox"> Puedo pedir ayuda.</label><label class="check"><input type="checkbox"> No depende de mí.</label></div>`;
+ if(t==='sleep')return `<div class="checklist"><label class="check"><input type="checkbox"> Alejar la pantalla 20 minutos.</label><label class="check"><input type="checkbox"> Escribir lo pendiente para mañana.</label><label class="check"><input type="checkbox"> Bajar las luces.</label><label class="check"><input type="checkbox"> Respirar lentamente.</label></div>`;
+ if(t==='stop')return `<div class="reading"><b>S:</b> detente.<br><b>T:</b> toma distancia.<br><b>O:</b> observa qué sientes y necesitas.<br><b>P:</b> procede cuando la intensidad haya bajado.</div><p>Frase útil: “Necesito unos minutos y luego podemos hablar.”</p>`;
+ if(t==='control')return `<div class="split"><textarea style="min-height:120px;border:1px solid var(--line);border-radius:12px;padding:10px" placeholder="Puedo controlar..."></textarea><textarea style="min-height:120px;border:1px solid var(--line);border-radius:12px;padding:10px" placeholder="No puedo controlar..."></textarea></div>`;
+ if(t==='work')return `<div class="checklist"><label class="check"><input type="checkbox"> Anotar tres pendientes de mañana.</label><label class="check"><input type="checkbox"> Reconocer qué sí logré hoy.</label><label class="check"><input type="checkbox"> Apagar notificaciones por un tiempo.</label><label class="check"><input type="checkbox"> Hacer una transición física.</label></div>`;
+ return `<p>Elige una tarea y comprométete solo durante cinco minutos.</p><div class="checklist"><label class="check"><input type="checkbox"> Abrir el documento.</label><label class="check"><input type="checkbox"> Ordenar un espacio pequeño.</label><label class="check"><input type="checkbox"> Responder un mensaje.</label><label class="check"><input type="checkbox"> Caminar cinco minutos.</label></div>`;
+}
+let timer;function startBreath(){clearTimeout(timer);const o=document.getElementById('orb');let p=0,ph=[['Inhala',4000,true],['Sostén',4000,true],['Exhala',6000,false]];function n(){let x=ph[p];o.innerHTML='<b>'+x[0]+'</b>';o.classList.toggle('expand',x[2]);p=(p+1)%3;timer=setTimeout(n,x[1])}n()}
+function ground(){extra.innerHTML=`<div class="reading" style="margin-top:13px"><b>5</b> cosas que ves<br><b>4</b> cosas que tocas<br><b>3</b> sonidos que escuchas<br><b>2</b> olores que reconoces<br><b>1</b> sabor o sensación</div>`}
+
+const scoreOpts=[['Nunca',0],['Varios días',1],['Más de la mitad de los días',2],['Casi todos los días',3]];
+const tests={
+ anx:{title:'Ansiedad',qs:['Sentirte nervioso/a, ansioso/a o con los nervios de punta.','No poder detener o controlar la preocupación.'],cut:3,high:5},
+ mood:{title:'Estado de ánimo',qs:['Poco interés o placer en hacer las cosas.','Sentirte decaído/a, deprimido/a o sin esperanza.'],cut:3,high:5},
+ stress:{title:'Estrés laboral',qs:['Sentirte agotado/a al iniciar o terminar la jornada.','Dificultad para desconectarte del trabajo.','Sentir que las demandas superan tus recursos.','Irritabilidad o tensión relacionada con el trabajo.'],cut:6,high:9},
+ sleep:{title:'Sueño',qs:['Dificultad para conciliar el sueño.','Despertarte varias veces o antes de lo deseado.','Sentirte cansado/a durante el día por dormir mal.'],cut:4,high:7}
+};
+function renderTests(){Object.entries(tests).forEach(([id,t])=>{document.getElementById('test-'+id).innerHTML=t.qs.map((q,i)=>`<div class="q"><b>${i+1}. ${q}</b><div class="opts">${scoreOpts.map(o=>`<label><input type="radio" name="${id}${i}" value="${o[1]}">${o[0]}</label>`).join('')}</div></div>`).join('')+`<button class="btn green" onclick="scoreTest('${id}')">Ver orientación</button><div id="res-${id}"></div>`})}renderTests();
+function switchTest(id,btn){document.querySelectorAll('.testbox').forEach(x=>x.classList.add('hidden'));document.getElementById('test-'+id).classList.remove('hidden');document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active')}
+function scoreTest(id){
+ const t=tests[id];let total=0,ok=true;t.qs.forEach((q,i)=>{const x=document.querySelector(`input[name="${id}${i}"]:checked`);if(!x)ok=false;else total+=+x.value});
+ const box=document.getElementById('res-'+id);if(!ok){box.innerHTML='<div class="result warn"><h4>Faltan respuestas</h4><p>Completa todas las preguntas.</p></div>';return}
+ const cls=total>=t.high?'danger':total>=t.cut?'warn':'';
+ const title=total>=t.high?'Te recomendamos solicitar apoyo profesional':total>=t.cut?'Sería útil conversar con la psicóloga':'Puedes seguir observando cómo te sientes';
+ box.innerHTML=`<div class="result ${cls}"><h4>${title}</h4><p>Tu puntuación fue <b>${total}</b>. Este resultado es orientativo y no confirma un diagnóstico.</p><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn green" onclick="book()">Solicitar consulta</button><button class="btn soft" onclick="go('help')">Quiero que me contacten</button></div></div>`
+}
+
+function generatePlan(){
+ const vals={feel:pFeel.value||'con emociones que estoy aprendiendo a manejar',level:pLevel.value,trigger:pTrigger.value||'una situación que necesito comprender mejor',tool:pTool.value||'una herramienta de autorregulación',after:pAfter.value||'un poco más consciente',next:pNext.value||'darme un momento y pedir apoyo si lo necesito'};
+ planCard.innerHTML=`<h3>Mi plan para hoy</h3><p>Hoy me siento <b>${vals.feel}</b>. Mi intensidad está en <b>${vals.level}</b>. Esto se activó por <b>${vals.trigger}</b>. Utilicé <b>${vals.tool}</b> y ahora me siento <b>${vals.after}</b>. Mi siguiente paso será <b>${vals.next}</b>.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" onclick="window.print()">Imprimir o guardar</button><button class="btn secondary" onclick="go('help')">Solicitar apoyo</button></div>`;
+ planCard.classList.remove('hidden');planCard.scrollIntoView({behavior:'smooth',block:'center'})
+}
+function clearPlan(){['pFeel','pTrigger','pTool','pAfter','pNext'].forEach(id=>document.getElementById(id).value='');pLevel.selectedIndex=0;planCard.classList.add('hidden')}
+function toggleContact(){contactForm.classList.toggle('hidden')}
+function sendContact(){
+ if(!consent.checked){contactResult.innerHTML='<div class="result warn"><h4>Necesitamos tu consentimiento</h4><p>Marca la casilla antes de enviar la solicitud.</p></div>';return}
+ const name=cName.value.trim(), contact=cContact.value.trim();if(!name||!contact){contactResult.innerHTML='<div class="result warn"><h4>Faltan datos</h4><p>Escribe tu nombre y un medio de contacto.</p></div>';return}
+ const subject=encodeURIComponent('Solicitud de apoyo emocional - CEBICOR Contigo');
+ const body=encodeURIComponent(`Nombre: ${name}\nContacto: ${contact}\nÁrea principal: ${cArea.value}\nMedio preferido: ${cMethod.value}\n\nLa persona otorgó consentimiento para ser contactada.`);
+ window.location.href=`mailto:${EMAIL}?subject=${subject}&body=${body}`;
+ contactResult.innerHTML='<div class="result"><h4>Solicitud preparada</h4><p>Se abrirá tu aplicación de correo para que confirmes el envío.</p></div>'
+}
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
